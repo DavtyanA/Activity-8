@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   GridItem,
@@ -13,8 +13,12 @@ import {
   Tag,
 } from '@chakra-ui/react';
 import { POSSIBLE_COURSES } from '../types/gentrans';
+import { addGrade } from '../lib/client';
 
 export function NewGradeForm() {
+  const [newGrade, setNewGrade] = useState<number>(0);
+  const [course, setCourse] = useState<string>('');
+  const [studentID, setStudentID] = useState<number>(0);
   return (
     <>
       <GridItem w='100%' h='100%' colSpan={1}>
@@ -24,7 +28,7 @@ export function NewGradeForm() {
             <Select
               placeholder='Select option'
               onChange={option => {
-                console.log(`Selected option`, option);
+                setCourse(option.target.value);
               }}>
               {POSSIBLE_COURSES.map(currentCourse => (
                 <option value={currentCourse} key={currentCourse}>
@@ -35,8 +39,8 @@ export function NewGradeForm() {
             <Input
               variant='outline'
               placeholder='Student ID'
-              onChange={() => {
-                console.log(`Added grade!`);
+              onChange={option => {
+                setStudentID(parseInt(option.target.value));
               }}
             />
           </Stack>
@@ -47,7 +51,7 @@ export function NewGradeForm() {
         <Stack spacing={6}>
           <NumberInput
             onChange={value => {
-              console.log('Changed! New value', value);
+              setNewGrade(parseInt(value));
             }}>
             <NumberInputField />
             <NumberInputStepper>
@@ -55,7 +59,12 @@ export function NewGradeForm() {
               <NumberDecrementStepper />
             </NumberInputStepper>
           </NumberInput>
-          <Button colorScheme='green' onClick={() => console.log('Add Toast Here!')}>
+          <Button
+            colorScheme='green'
+            onClick={() => {
+              addGrade(studentID, course, newGrade);
+              console.log('Add Toast Here!');
+            }}>
             Add Grade
           </Button>
         </Stack>

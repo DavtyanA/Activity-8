@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { GridItem, Tag, Stack, Input, Button } from '@chakra-ui/react';
+import { addStudent } from '../lib/client';
 
 export function NewStudentForm() {
+  const [studentName, setStudentname] = useState<string>('');
   return (
     <GridItem w='100%' h='100%' colSpan={1}>
       <div>
@@ -11,7 +13,7 @@ export function NewStudentForm() {
             variant='outline'
             placeholder='Student Name'
             onChange={e => {
-              console.log('Updated name,', e.target.value);
+              setStudentname(e.target.value);
             }}
           />
         </Stack>
@@ -19,7 +21,9 @@ export function NewStudentForm() {
         <Button
           colorScheme='green'
           onClick={() => {
-            console.log('Added Student');
+            console.log(studentName);
+            const name = addStudent(studentName);
+            console.log(name);
           }}>
           Add Student
         </Button>
