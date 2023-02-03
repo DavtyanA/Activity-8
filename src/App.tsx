@@ -38,17 +38,17 @@ function App() {
 
   useEffect(() => {
     setTranscripts(prevTranscripts =>
-      prevTranscripts.sort((a, b) => {
+      prevTranscripts.slice().sort((a, b) => {
         switch (sortBy) {
           case 'id': {
-            if (isAscending === 'desc') {
+            if (isAscending === 'asc') {
               return a.student.studentID - b.student.studentID;
             } else {
               return b.student.studentID - a.student.studentID;
             }
           }
           case 'name': {
-            if (isAscending === 'desc') {
+            if (isAscending === 'asc') {
               return a.student.studentName.localeCompare(b.student.studentName);
             } else {
               return b.student.studentName.localeCompare(a.student.studentName);
@@ -65,7 +65,7 @@ function App() {
             const aAverage = aTotal / aLength;
             const bAverage = bTotal / bLength;
 
-            if (isAscending === 'desc') {
+            if (isAscending === 'asc') {
               return aAverage - bAverage;
             } else {
               return bAverage - aAverage;

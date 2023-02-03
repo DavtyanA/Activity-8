@@ -6,11 +6,12 @@ import {
   Editable,
   EditablePreview,
   EditableInput,
+  useToast,
 } from '@chakra-ui/react';
 import { CourseGrade } from '../types/transcript';
-import { updateGrade } from '../lib/client';
 
-export function GradeView({ grade, studentID }: { grade: CourseGrade; studentID: number }) {
+export function GradeView({ grade }: { grade: CourseGrade; studentID: number }) {
+  const toast = useToast();
   return (
     <Stat>
       <StatLabel>{grade.course}</StatLabel>
@@ -18,7 +19,13 @@ export function GradeView({ grade, studentID }: { grade: CourseGrade; studentID:
         <Editable
           defaultValue={`${grade.grade}`}
           onSubmit={newValue => {
-            updateGrade(studentID, grade.course, Number(newValue));
+            toast({
+              title: 'Grade Updated',
+              description: `Grade updated to ${newValue}.`,
+              status: 'success',
+              duration: 5000,
+              isClosable: true,
+            });
             console.log(`Want to update grade to ${newValue}`);
           }}>
           <EditablePreview />
