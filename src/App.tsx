@@ -79,8 +79,8 @@ function App() {
     );
   }, [sortBy, isAscending]);
 
-  const startIndex = 0 + ITEMS_PER_PAGE * parseInt(pageNumber) - 1;
-  const endIndex = ITEMS_PER_PAGE + ITEMS_PER_PAGE * parseInt(pageNumber) - 1;
+  const startIndex = 0 + ITEMS_PER_PAGE * (parseInt(pageNumber) - 1);
+  const endIndex = ITEMS_PER_PAGE + ITEMS_PER_PAGE * (parseInt(pageNumber) - 1);
 
   const handlePageNumber = (newValue: string) => {
     const parsed: number | undefined = parseInt(newValue);
